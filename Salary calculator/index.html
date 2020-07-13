@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Obračun plata</title>
+    <meta charset="utf-8">
+
+    <link rel="icon" href="./img/bih.png" type="image/x-icon">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="./files/style.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+<body>
+    <body class="bg-dark">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-10 mx-auto">
+              <div class="card card-body text-center mt-5">
+                <h1 class="heading display-5 pb-3">Obračun plata</h1>
+                <br>
+
+                <form id="forma">
+                    <div class="form-group">
+                        <p>Broj radnih sati :</p>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="efektivno" placeholder="">
+                        </div>
+                    </div>
+                    <!-- prekovremeeni-->
+                    <div class="form-group"><br>
+                        <p>Prekovremeni broj sati :</p>
+                        <div class="input-group">
+                        <input type="number" class="form-control" id="prekovremeno" placeholder="" >
+                      </div>
+                    </div>
+                      <!-- godisnji odmor sati-->
+                    <div class="form-group"><br>
+                        <p>Broj sati godišnjeg odmora :</p>
+                        <div class="input-group">
+                        <input type="number" class="form-control" id="godisnji" placeholder="" >
+                      </div>
+                    </div>
+                    
+                    <div class="form-group"><br>
+                        <p>Broj sati vikendom :</p>
+                        <div class="input-group">
+                        <input type="number" class="form-control" id="vikend" placeholder="" >
+                      </div>
+                    </div>
+
+                    <div class="form-group"><br>
+                        <p>Broj radnih sati praznicima :</p>
+                        <div class="input-group">
+                        <input type="number" class="form-control" id="praznikRad" placeholder="" >
+                      </div>
+                    </div>
+
+                    <div class="form-group"><br>
+                        <p>Broj sati praznika :</p>
+                        <div class="input-group">
+                        <input type="number" class="form-control" id="praznik" placeholder="" >
+                      </div>
+                    </div>
+                    <br>
+
+                    <!-- koeficijent-->
+                    <div class="form-group">
+                        <p>Koeficijent :</p>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="koeficijent" placeholder="0.00" >
+                        </div>
+                    </div>
+                    <br>
+
+                      <div class="form-group">
+                        <p>Broj godina radnog staža :</p>
+                        <div class="input-group">
+                        <input type="number" class="form-control" id="staz" placeholder="" min="0" max="20" >
+                      </div>
+                      <br>
+
+                      <div class="form-group">
+                        <p>Porezni koeficijent :</p>
+                        <div class="input-group">
+                        <input type="text" class="form-control" id="porezniKoef" placeholder="Zbir koeficijenta ( 0.00 )" min="0" max="40" >
+                      </div><br>
+                      <p>
+                        Objašnjenje :<br>
+                        - 0.5 za bračnog druga, kao i za bivšeg bračnog druga kojem plaća
+                        alimentaciju (150,00 KM mjesečno),<br>
+                        - 0.5 za prvo dijete (150,00 KM mjesečno),<br>
+                        - 0.7 za drugo dijete (210,00 KM mjesečno),<br>
+                        - 0.9 za treće i svako naredno dijete (270,00 KM mjesečno),<br>
+                        - 0.3 za drugog člana uže porodice (90,00 KM mjesečno),<br>
+                        - 0.3 za utvrđenu invalidnost poreznog obveznika i svakog člana uže
+                        porodice koje porezni obveznik izdržava (90,00 KM mjesečno). 
+                      </p>
+                      <div class="form-group">
+                        <p>Broj članova porodice :</p>
+                        <div class="input-group">
+                        <input type="number" class="form-control" id="clan" placeholder="" min="0" max="40" >
+                      </div><br>
+                      
+                      <input type="submit" id="button" value="Izračunaj" class="btn btn-primary btn-block">
+                      <br><div id="err"></div>
+                  </div>
+
+                  <br>
+                </form>
+
+                <!-- LOADER -->
+                <div id="loading">
+                  <img src="img/loading.gif" alt="">
+                </div>
+                <!-- RESULTS -->
+                
+                <div id="results" class="pt-4">
+                <h2 class="heading display-5 pb-3">Detalji kalkulacije</h2>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Ukupno za rad</span>
+                      <input type="number" class="form-control" id="ukupnoEF" disabled>
+                      <span class="input-group-addon">KM</span>
+                    </div>
+                    <br>
+                  </div>
+    
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Prekovremeni rad</span>
+                      <input type="number" class="form-control" id="ukupnoPR" disabled>
+                      <span class="input-group-addon">KM</span>
+                    </div>
+                    <br>
+                </div>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Godišnji odmor</span>
+                      <input type="number" class="form-control" id="ukupnoGD" disabled>
+                      <span class="input-group-addon">KM</span>
+                    </div>
+                    <br>
+                  </div>
+    
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Rad vikendima </span>
+                      <input type="number" class="form-control" id="ukupnoV" disabled>
+                      <span class="input-group-addon">KM</span>
+                    </div>
+                    <br>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Rad praznicima </span>
+                      <input type="number" class="form-control" id="ukupnoRP" disabled>
+                      <span class="input-group-addon">KM</span>
+                    </div>
+                    <br>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Praznici</span>
+                      <input type="number" class="form-control" id="ukupnoP" disabled>
+                      <span class="input-group-addon">KM</span>
+                    </div>
+                    <br>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Bruto plata </span>
+                      <input type="number" class="form-control" id="ukupnoBruto" disabled>
+                      <span class="input-group-addon">KM</span>
+                    </div>
+                    <br>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Neto plata</span>
+                      <input type="number" class="form-control" placeholder="" id="ukupnoNeto" disabled>
+                      <span class="input-group-addon">KM</span>
+                    </div>
+                    <br>
+                  </div>
+                  
+                  
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Minuli rad</span>
+                      <input type="number" class="form-control" id="minuliRad" disabled>
+                      <span class="input-group-addon">KM</span>
+                    </div>
+                    <br>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Porez na dohodak</span>
+                      <input type="number" class="form-control" id="dohodak" disabled>
+                      <span class="input-group-addon">KM</span>
+                    </div>
+                    <br>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon"><strong>GOTOVINA</strong></span>
+                        <input type="number" class="form-control" id="ukupnoGotovina" disabled>
+                      <span class="input-group-addon"><strong>KM</strong></span>
+                    </div>
+                    <br>
+                  </div>
+
+                  <button class="btn btn-primary" onclick="window.print()">Isprintaj format</button>
+                  <br><br>
+            
+                  <div id="copyright" >
+                    <p>
+                       <strong> Copyright &copy; 2020 Almir Tihak
+                      </strong>
+                    </p>
+                </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <script src="./files/script.js"></script>
+</body>
+</html>

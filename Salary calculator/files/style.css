@@ -1,0 +1,52 @@
+#loading{
+    display: none;
+  }
+  p{
+      margin-left:0px;
+      text-align: left;
+      margin-bottom:8px;
+  }
+  div .form-group{
+      margin-bottom:2px;
+  }
+   #ukupnoEF{
+      text-align: right;
+  }
+  #ukupnoPR{
+      text-align: right;
+  }
+  #ukupnoGD{
+      text-align: right;
+  }
+  #ukupnoV{
+      text-align: right;
+  }
+  #ukupnoRP{
+      text-align: right;
+  }
+  #ukupnoP{
+      text-align: right;
+  }
+  #ukupnoBruto{
+      text-align: right;
+  }
+  #ukupnoNeto{
+      text-align: right;
+  }
+  #dohodak{
+    text-align: right;
+  }
+
+  #ukupnoGotovina{
+    text-align: right;
+    font-weight: bold;
+  } 
+  #button{
+    font-size: 18px;
+  }
+  #minuliRad{
+    text-align: right;
+  }
+  #copyright p{
+    text-align: center;
+  }
