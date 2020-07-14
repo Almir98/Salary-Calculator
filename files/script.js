@@ -17,7 +17,7 @@ function calculateResults(e)
     const praznici=document.getElementById("praznik");
     const koeficijent=document.getElementById("koeficijent");
     const staz=document.getElementById("staz");
-    const clanovi=document.getElementById("clan");
+    const porezniKoef=document.getElementById("porezniKoef");
     
     // Koeficijenti
     const koefEPG=1;
@@ -45,7 +45,7 @@ function calculateResults(e)
     const satnica=parseFloat(3.99);
 
     if(efektivno.value!==''&&prekovremeno.value!==''&&godisnji.value!==''&&vikend.value!==''
-       && praznikRad.value!==''&&praznici.value!==''&&koeficijent.value!==''&&staz.value!==''&&clanovi.value!=='')
+       && praznikRad.value!==''&&praznici.value!==''&&koeficijent.value!==''&&staz.value!=='')
     {
         ukupnoEfektivno.value=parseFloat(efektivno.value*satnica*koeficijent.value*koefEPG).toFixed(2);
         ukupnoPrekovremeno.value=parseFloat(prekovremeno.value*satnica*koeficijent.value*koefP).toFixed(2);
@@ -69,9 +69,10 @@ function calculateResults(e)
         ukupnoBruto.value=(parseFloat(ukupno)+parseFloat(minuliRad.value)).toFixed(2);
         ukupnoNeto.value=(parseFloat(ukupnoBruto.value)*parseFloat(porez)).toFixed(2);
 
-        let s=parseFloat(ukupnoNeto.value-600);
+        var neoporezivi=parseFloat(porezniKoef.value)*300;
+        var s=parseFloat(ukupnoNeto.value-neoporezivi);
 
-        dohodak.value=parseFloat(s*0.1).toFixed(2);
+        dohodak.value=(parseFloat(s)*parseFloat(0.1)).toFixed(2);
         gotovina.value=parseFloat(ukupnoNeto.value-dohodak.value).toFixed(2);
 
         document.getElementById('loading').style.display='none';
